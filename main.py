@@ -1,57 +1,8 @@
-# Library Management System
-# Objective: Create a simple Library Management System where users can manage a collection
-# of books. This project will involve using lists, tuples, dictionaries, and functions to perform
-# various operations like adding, removing, searching, and displaying books.
-# Functional Requirements:
-# 1. Add a Book:
-# ○ Users should be able to add a book to the library.
-# ○ Each book can be represented as a dictionary with keys like title, author,
-# year_published, and isbn.
-# ○ Store all books in a list.
-# 2. Remove a Book:
-# ○ Users should be able to remove a book using its isbn.
-# 3. Search for a Book:
-# ○ Users should be able to search for books by title or author.
-# ○ Display the details of the matching books.
-# 4. Display All Books:
-# ○ Display a list of all the books currently in the library, showing their details.
-# 5. Update Book Information:
-# ○ Users should be able to update the details of an existing book using its isbn.
-# Project Outline:
-# 1. Main Menu:
-# ○ Display options for the user to choose from:
-# ■ Add a Book
-# ■ Remove a Book
-# ■ Search for a Book
-# ■ Display All Books
-# ■ Update Book Information
-# ■ Exit
-# 2. Functions:
-# ○ add_book(library): Prompts the user for book details and adds the book to the
-# library.
-# ○ remove_book(library): Prompts the user for an isbn and removes the
-# corresponding book.
-# ○ search_books(library): Prompts the user for a search term (either title or
-# author) and displays matching books.
-# ○ display_books(library): Displays all books in the library.
-# ○ update_book(library): Prompts the user for an isbn and allows updating of
-# book details.
-# Data Structures:
-# ● List: Used to store the collection of books.
-# ● Dictionary: Used to represent each book with its details.
-# Functions:
-# ● Learn to write modular code by creating functions for each operation.
-# ● Understand how to pass and manipulate data using function parameters.
-# User Input:
-# ● Practice handling user input and validating it.
-# Conditional Statements:
-# ● Use if-else statements to navigate the main menu and handle different user choice
-
-
-# # ===================================
+import time
 
 class LibraryManagementSystem:
     def __init__(self):
+        self.sleep = time.sleep(1)
         self.BooksAvailable = {
             "To Kill a Mockingbird": {
                 "author": "Harper Lee",
@@ -126,31 +77,121 @@ class LibraryManagementSystem:
             "Fahrenheit 451",
             "Jane Eyre"
         ]
-    pass
+
+        while True:
+            print("\nWelcome to the Library Management System")
+            self.sleep
+            print("1. Add a Book")
+            print("2. Remove a Book")
+            print("3. Search for a Book")
+            print("4. Display All Books")
+            print("5. Update Book Information")
+            print("6. Exit")
+            choice = input("Enter your choice: ")
+            if choice == "1":
+                self.addBook()
+            elif choice == "2":
+                self.removeBook()
+            elif choice == "3":
+                self.searchBooks()
+            elif choice == "4":
+                self.displayBooks()
+            elif choice == "5":
+                self.updateBook()
+            elif choice == "6":
+                print("Exiting System.....")
+                time.sleep(1)
+                break
+            else:
+                print("Invalid Choice")
 
     def addBook(self):
         print("Enter the name of the book:")
         bookName = input()
         print("Enter the name of the author:")
         authorName = input()
+        print("Enter the price of the book:")
+        bookPrice = input()
+        print("Enter the ISBN of the book:")
+        bookISBN = input()
+        print("Enter the genre of the book:")
+        bookGenre = input()
+        self.BooksAvailable.update({
+            bookName: {
+                "author": authorName,
+                "price_usd": bookPrice,
+                "isbn": bookISBN,
+                "genre": bookGenre
+            }
+        })
+        self.ListOfBooks.append(bookName)
+        self.sleep
+        print(f"{bookName} with ISBN {bookISBN} added Successfully!")
+
+    def removeBook(self,):
+        print("Enter the name of the book:")
+        bookName = input()
+        print("Enter the ISBN of the book:")
+        bookISBN = input()
+
+        book_to_remove = None
+        for book, details in self.BooksAvailable.items():
+            if details["isbn"] == bookISBN:
+                book_to_remove = book
+                break
+
+        if book_to_remove:
+            del self.BooksAvailable[book_to_remove]
+            self.sleep
+            print(f"{bookName} with ISBN {bookISBN} removed successfully!")
+        else:
+            self.sleep
+            print(f"No book found with ISBN: {bookISBN}")
+
+        for book in self.ListOfBooks:
+            if book == bookName:
+                self.ListOfBooks.remove(bookName)
+                break
+
+    def searchBooks(self):
+        print("Enter the name of the book: ")
+        bookName = input()
+        if bookName in self.ListOfBooks:
+            self.sleep
+            print(f"{bookName} found!")
+        else:
+            print(f'No book named {bookName} found!')
+
+    def displayBooks(self):
+        for index, book in enumerate(self.ListOfBooks, 1):
+            self.sleep
+            print(f"{index}. {book}")
+
+    def updateBook(self):
+        print("Enter the name of the book: ")
+        bookName = input()
+        print("Enter the ISBN of the book: ")
+        bookISBN = input()
+        print("Enter the name of the author: ")
+        authorName = input()
         print("Enter the price of the book: ")
         bookPrice = input()
-        print("Enter the 14 digit ISBN number: ")
-        bookISBN = int(input())
         print("Enter the genre of the book: ")
         bookGenre = input()
-
+        
         self.BooksAvailable.update({
-            "author": authorName,
-            "price_usd": bookPrice,
-            "isbn": bookISBN,
-            "genre": bookGenre})
-
+            bookName: {
+                "author": authorName,
+                "price_usd": bookPrice,
+                "isbn": bookISBN,
+                "genre": bookGenre
+            }
+        })
         self.ListOfBooks.append(bookName)
-        print(self.BooksAvailable)
-        print(self.ListOfBooks)
-        pass
+        self.sleep
+        print(f"{bookName} with ISBN {bookISBN} successfully updated!")
+
 
 if __name__ == "__main__":
-    a = LibraryManagementSystem()
-    print(a.addBook())
+    system = LibraryManagementSystem()
+    print(system)
